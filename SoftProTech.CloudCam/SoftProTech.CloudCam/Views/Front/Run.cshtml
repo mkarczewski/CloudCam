@@ -1,0 +1,142 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="SoftProTech CloudCam" />
+    <title>SoftProTech CloudCam</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-theme.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/main.css")" />
+
+    <script src="@Url.Content("~/Scripts/jquery-1.9.1.js")"></script>
+    <script src="@Url.Content("~/Scripts/underscore.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
+    <script src="@Url.Content("~/Scripts/backbone.js")"></script>
+    <script src="@Url.Content("~/Scripts//backbone.marionette.js")"></script>
+
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://www.softprotech.pl" target="_blank">
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="#" class="navbar-brand">SoftProTech CloudCam</a>
+
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Browse recordings</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <!-- region -->
+            <div class="col-xs-2" id="left-region">
+
+            </div>
+
+            <!-- region -->
+            <div class="col-xs-10" id="center-region">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- template -->
+    <script id="recording-browser-template" type="text/template">
+                
+        <span><%= displayTime %></span>
+        <br/>
+
+        <button id="first-frame-btn" class="btn btn-default">
+            <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
+        </button>
+
+        <button id="prev-frame-btn" class="btn btn-default">
+            <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+        </button>
+
+        <button id="next-frame-btn" class="btn btn-default">
+            <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+        </button>
+
+        <button id="last-frame-btn" class="btn btn-default">
+            <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
+        </button>
+
+        <br />
+        <img id="preview-img" src="/Front/GetImage?path=<%= currentPath %>" style="width:800px;" />
+
+    </script>
+
+    <!-- template -->
+    <script id="navigation-template" type="text/template">
+        
+        <% if( navigationLevel == "year" ) { %>
+        <a href="#browseCamera"  class="btn btn-success" id="nav-up-btn">Go back</a>
+        <% } %>
+
+        <% if( navigationLevel == "month" ) { %>
+        <a href="#browseYear/<%= upPath %>" class="btn btn-success" id="nav-up-btn">Go back</a>
+        <% } %>
+
+        <% if( navigationLevel == "day" ) { %>
+        <a href="#browseMonth/<%= upPath %>" class="btn btn-success" id="nav-up-btn">Go back</a>
+        <% } %>
+
+        <% if( navigationLevel == "hour" ) { %>
+        <a href="#browseDay/<%= upPath %>" class="btn btn-success" id="nav-up-btn">Go back</a>
+        <% } %>
+
+        <!-- container -->
+        <ul id="nav-items-region" class="nav nav-pills nav-stacked"></ul>
+
+    </script>
+
+    <!-- template -->
+    <script id="navigation-item-template" type="text/template">
+        
+        <% if( navigationLevel == "camera" ) { %>
+            <a href="#browseYear/<%= path %>"> <span><%= displayName %></span></a>
+        <% } %>
+
+        <% if( navigationLevel == "year" ) { %>
+        <a href="#browseMonth/<%= path %>"> <span><%= displayName %></span></a>
+        <% } %>
+
+        <% if( navigationLevel == "month" ) { %>
+        <a href="#browseDay/<%= path %>"> <span><%= displayName %></span></a>
+        <% } %>
+
+        <% if( navigationLevel == "day" ) { %>
+        <a href="#browseHour/<%= path %>"> <span><%= displayName %></span></a>
+        <% } %>
+
+        <% if( navigationLevel == "hour" ) { %>
+        <a href="#preview/<%= path %>"> <span><%= displayName %></span></a>
+        <% } %>
+        
+    </script>
+
+    <script src="@Url.Content("~/app/clam.app.js")"></script>
+
+</body>
+</html>
